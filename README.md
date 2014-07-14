@@ -15,6 +15,3 @@ To start the server, just run
 ```
 gulp
 ```
-=======
-bb-tit
-======
