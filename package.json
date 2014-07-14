@@ -1,0 +1,30 @@
+{
+  "name": "BB_TiT",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "./node_modules/.bin/gulp server"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.4.x"
+  },
+  "dependencies": {
+    "bootstrap3-stylus": "0.1.0",
+    "nomnom": "1.8.0",
+    "bower": "1.3.4",
+    "ejs": "1.0.0",
+    "express": "3.4.7",
+    "express3-handlebars": "0.5.0",
+    "gulp": "3.6.2",
+    "gulp-clean": "0.3.0",
+    "gulp-concat": "2.2.0",
+    "gulp-nodemon": "1.0.4",
+    "gulp-notify": "1.3.1",
+    "gulp-uglify": "0.3.0",
+    "lodash": "2.2.1",
+    "nconf": "0.6.5",
+    "nib": "1.0.0",
+    "stylus": "0.39.1"
+  }
+}
