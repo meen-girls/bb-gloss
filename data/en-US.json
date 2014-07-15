@@ -1,0 +1,343 @@
+{
+  "site_title": "Branding Brand",
+  "links": {
+    "home": "Home",
+    "menu": "Menu",
+    "stores": "Stores",
+    "cart": "Cart",
+    "account": "Account",
+    "shop": "Shop",
+    "call": "Call Us",
+    "contact": "Contact Us",
+    "feedback": "Feedback",
+    "fullsite": "View Desktop Site",
+    "terms": "Terms",
+    "privacy": "Privacy Policy"
+  },
+  "header": {
+    "nav": [{
+      "title": "$__(links.stores)",
+      "class": "stores",
+      "href": "/stores"
+    }, {
+      "title": "$__(links.cart)",
+      "count": "inside",
+      "cart": "true"
+    }]
+  },
+  "footer": {
+    "copyright": "&copy; Branding Brand.",
+    "phone_number": "XXX.XXX.XXXX",
+    "email_signup": {
+      "button": "Sign up",
+      "label": "Sign up for our email newsletter"
+    },
+    "nav": [
+      [{
+        "title": "$__(links.feedback)",
+        "href": "/feedback",
+        "class": "feedback"
+      }, {
+        "title": "$__(links.contact)",
+        "href": "#",
+        "class": "contact"
+      }, {
+        "title": "$__(links.stores)",
+        "href": "/stores",
+        "class": "stores"
+      }],
+      [{
+        "title": "$__(links.privacy)",
+        "href": "#",
+        "class":  "privacy"
+      }, {
+        "title": "$__(links.terms)",
+        "href": "#",
+        "class": "terms"
+      }]
+    ]
+  },
+  "social_media": {
+    "sites": [{
+      "title": "Facebook",
+      "class": "facebook",
+      "href": "http://facebook.com/brandingbrand"
+    }, {
+      "title": "Twitter",
+      "class": "twitter",
+      "href": "http://twitter.com/brandingbrand"
+    }, {
+      "title": "Pinterest",
+      "class": "pinterest",
+      "href": "http://pinterest.com/brandingbrand"
+    }, {
+      "title": "YouTube",
+      "class": "youtube",
+      "href": "http://youtube.com/brandingbrand"
+    }]
+  },
+  "forms": {
+    "required": "__symbol__ = required",
+    "add": "Add",
+    "remove": "Remove",
+    "edit": "Edit",
+    "submit": "Submit",
+    "validation_errors": {
+      "blank": "__label__ is required.",
+      "invalid": "__label__ is invalid."
+    }
+  },
+  "categories": {
+    "select_subcategory": "Select a Subcategory"
+  },
+  "product": {
+    "add_to_cart": "Add to Cart",
+    "add_to_wishlist": "Add to Wishlist",
+    "availability": {
+      "in_store": "In Store",
+      "online": "Online",
+      "out_of_stock": "Out of Stock",
+      "backordered": "Backordered",
+      "in_store_only": "This product is only available in store.",
+      "online_only": "This product is only available online."
+    },
+    "description": "Description",
+    "zoom": "Tap to Zoom",
+    "quantity": "Quantity",
+    "select_option_title": "Select __option_title__",
+    "cross_sales": "Related Items",
+    "up_sales": "Related Items",
+    "sharing": {
+      "email": "Email",
+      "facebook": "Share on Facebook",
+      "googleplus": "Share on Google+",
+      "pinterest": "Share on Pinterest",
+      "tumblr": "Share on Tumblr",
+      "twitter": "Share on Twitter"
+    }
+  },
+  "products": {
+    "grid_view": "Grid",
+    "list_view": "List",
+    "sorts": "Sort By...",
+    "filters": "Filter By...",
+    "filters_selected": "__count__ selected",
+    "filters_clear": "Clear All Selections",
+    "pagination": {
+      "load_more": "Load More Products",
+      "previous": "prev",
+      "next": "next",
+      "page": "Page"
+    }
+  },
+  "reviews": {
+    "title": "Ratings & Reviews",
+    "no_reviews": "This product has no reviews.",
+    "first_write": "Be the first to write one.",
+    "no_more": "Back to Top",
+    "num": "Showing __num__ of __count__ review",
+    "num_plural": "Showing __num__ of __count__ reviews",
+    "load_more": "View More",
+    "next": "Next",
+    "previous": "Previous",
+    "loading": "$__(loading)",
+    "write": "Write a Review",
+    "recommended": "I would recommend this to a friend"
+  },
+  "search": {
+    "button": "Search",
+    "label": "Search",
+    "no_results_title": "Sorry!",
+    "no_results": "No results were found matching \"__query__.\"",
+    "results": "Search results for \"__query__.\""
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty.",
+    "checkout": "Begin Checkout",
+    "checkout_with_google": "Checkout with Google Wallet",
+    "checkout_with_paypal": "Checkout with PayPal",
+    "continue_shopping": "$__(continue_shopping)",
+    "edit": "$__(forms.edit)",
+    "remove": "$__(forms.remove)",
+    "update": "$__(forms.update)",
+    "quantity": "Quantity",
+    "move_to_wishlist": "Move to Wishlist",
+    "promo_code": "Promo Code",
+    "promo_code_applied": "Promo code \"__code__\" applied.",
+    "promo_code_details": "To apply a promotion code to your order, enter the code below and tap \"Apply.\" Only one promotional code may be redeemed per order.",
+    "apply": "Apply",
+    "order_summary": "Order Summary",
+    "total": "Order Total",
+    "total_description": "",
+    "subtotal": "Subtotal",
+    "subtotal_description": "",
+    "tax": "Tax",
+    "tax_description": "",
+    "shipping": "Shipping",
+    "shipping_description": ""
+  },
+  "wishlist": {
+    "title": "Wishlist",
+    "empty": "Your wishlist is empty.",
+    "continue_shopping": "$__(continue_shopping)",
+    "edit": "$__(forms.edit)",
+    "remove": "$__(forms.remove)",
+    "update": "$__(forms.update)",
+    "quantity": "Quantity",
+    "move_to_cart": "Move to Cart"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "continue": "Continue",
+    "checkout_as_guest": "Checkout as Guest",
+    "sign_in": "Sign In for Express Checkout",
+    "getting_data": "Retrieving Your Preferred Addresses",
+    "addresses": "Addresses",
+    "payment": "Payment",
+    "receipt": "Receipt",
+    "billing_address": "Billing Address",
+    "shipping_address": "Shipping Address",
+    "shipping_method": "Shipping Method",
+    "same_address": "Ship to billing address",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "full_name": "Full Name",
+    "address": "Address",
+    "address_line": "Address Line __number__",
+    "country": "Country",
+    "city": "City",
+    "region": "State",
+    "postal_code": "Zip Code",
+    "apo_fpo": "APO/FPO Address?",
+    "apo_fpo_instruction": "Enter an APO or FPO ZIP Code above. You may also enter APO or FPO in the \"City\" field, and select one of the following three choices from the \"State\" menu: AA for Armed Forces of America, AE for Armed Forces Europe, AP for Armed Forces Pacific.",
+    "phone_number": "Phone Number",
+    "email": "Email Address",
+    "select_country": "Select Country",
+    "select_region": "Select State",
+    "payment_method": "Payment Method",
+    "gc_promo_code": "Promo Code / Gift Card",
+    "promo_code": "Promo Code",
+    "gift_card": "Gift Card",
+    "gift_card_details": "Use gift cards to pay for all or part of your order.",
+    "gift_card_applied": "Applied __amount__. The remaining balance on this card is __balance__.",
+    "payment_details": "Select and enter payment details",
+    "card_number": "Number",
+    "cardholder_name": "Cardholder Name",
+    "expiration_month": "Exp. Month",
+    "expiration_year": "Exp. Year",
+    "expiration_date": "Expiration Date",
+    "cvv": "Security Code",
+    "card_type": "Card Type",
+    "cards": {
+      "visa": "Visa",
+      "mastercard": "MasterCard",
+      "amex": "American Express",
+      "discover": "Discover Card",
+      "diners_club": "Diner's Club",
+      "jcb": "JCB"
+    },
+    "payment_methods": {
+      "cc": "Credit Card",
+      "paypal": "PayPal",
+      "paypal_continue": "Tap \"Continue\" to check out with PayPal.",
+      "google": "Google Wallet",
+      "google_continue": "Tap \"Continue\" to check out with Google Wallet."
+    },
+    "searching": "Searching...",
+    "updating": "Updating",
+    "edit_location": "Tap location to edit.",
+    "submit_order_title": "Please Submit Your Order",
+    "submit_order": "Submit Order",
+    "order_details": "Order Details",
+    "thank_you": "Thank you for your order!",
+    "receipt_message": "",
+    "order_number": "Order __order_number__",
+    "continue_shopping": "$__(continue_shopping)",
+    "secure_checkout": "Secure Checkout",
+    "safe_and_secure": "Shopping is always safe and secure.",
+    "nav": [{
+      "title": "$__(checkout.addresses)",
+      "controller": "addresses"
+    }, {
+      "title": "$__(checkout.payment)",
+      "controller": "payment"
+    }, {
+      "title": "$__(checkout.submit_order)",
+      "controller": "confirm"
+    }]
+  },
+  "locator": {
+    "title": "Store Locator",
+    "no_results_title": "No Results",
+    "no_results": "No results found.",
+    "result": "__count__ result near \"__query__\"",
+    "result_plural": "__count__ results near \"__query__\"",
+    "directions": "Directions",
+    "search": {
+      "button": "Find",
+      "label": "Enter Location"
+    }
+  },
+  "account": {
+    "title": "My Account",
+    "log_in": "Log in",
+    "log_out": "Log out",
+    "login": "Email Address",
+    "password": "Password",
+    "forgot_password": "Forgot Password",
+    "persist": "Remember Me",
+    "logging_in": "Logging in",
+    "login_failed": "Login Failed. Please Try Again.",
+    "logged_in_as": "Logged in as __user__",
+    "create_account": "Create Account",
+    "old_password": "Old Password",
+    "new_password": "New Password",
+    "confirm_password": "Confirm Password",
+    "change_password": "Change Password",
+    "nav": [{
+      "title": "Order History &amp; Tracking",
+      "href": "/account/orders"
+    }, {
+      "title": "Wishlist",
+      "href": "/account/wishlist"
+    }, {
+      "title": "Credit Cards",
+      "href": "/account/cc"
+    }, {
+      "title": "Billing Address",
+      "href": "/account/addresses/billing"
+    }, {
+      "title": "Shipping Address",
+      "href": "/account/addresses/shipping"
+    }, {
+      "title": "Change Password",
+      "href": "/account/password"
+    }, {
+      "title": "Change Email Address",
+      "href": "/account/email"
+    }, {
+      "title": "Logout",
+      "href": "/",
+      "logout": true
+    }]
+  },
+  "gift_card": {
+    "title": "Gift Card",
+    "number": "Number",
+    "balance": "Balance",
+    "expiration_date": "Expiration Date",
+    "pin": "PIN",
+    "check_balance": "Check Balance"
+  },
+  "error": {
+    "reload_page": "Reload Page",
+    "continue_shopping": "$__(continue_shopping)",
+    "generic": {
+      "title": "Sorry!",
+      "message": "We encountered an unknown error."
+    }
+  },
+  "continue_shopping": "Continue Shopping",
+  "loading": "Loading"
+}
