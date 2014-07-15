@@ -1,4 +1,4 @@
-BB Typing In Tongue
+BB Gloss
 ======================
 
 To install you will need gulp and bower and node.
