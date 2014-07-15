@@ -1,7 +1,7 @@
 BB Gloss
 ======================
 
-To install you will need gulp and bower and node.
+To install you will need gulp, bower, and node.
 * http://gulpjs.com/
 * http://bower.io/
 * http://nodejs.org/
