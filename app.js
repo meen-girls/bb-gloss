@@ -3,15 +3,19 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , exphbs  = require('express3-handlebars')
-  , bootstrap = require('bootstrap3-stylus')
-  , stylus = require('stylus')
-  , nib = require('nib')
-  , router = require('./router')
-  , http = require('http')
-  , path = require('path')
-  , mongoose = require('mongoose');
+var express      = require('express')
+  , bootstrap    = require('bootstrap3-stylus')
+  , stylus       = require('stylus')
+  , nib          = require('nib')
+  , routes       = require('./routes')
+  , http         = require('http')
+  , path         = require('path')
+  , favicon      = require('serve-favicon')
+  , morgan       = require('morgan')
+  , errorhandler = require('errorhandler')
+  , bodyParser   = require('body-parser')
+  , mongoose     = require('mongoose');
+
 
 // connect to db (hosted on mongo labs)
 mongoose.connect('mongodb://test:test@ds043467.mongolab.com:43467/bb-tit');
@@ -38,29 +42,28 @@ app.set('port', process.env.PORT || 3000);
 app.set('socket', process.env.PORT || opts.sock);
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
-app.use(express.favicon());
-app.use(express.logger('dev'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 //Register stylus
 app.use(stylus.middleware(
   { src: __dirname + '/public'
   , compile: compile
   }
 ));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
-app.use(express.session());
-app.use(app.router);
+app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+  // Tiny, Short, Default
+  app.use(morgan('short'));
+  app.use(errorhandler());
 }
 
 //Add routes, in routes.js
-router.registerRoutes(app);
+routes.registerRoutes(app);
+
 // remove previous socket before continuing start-up
 if (app.get('socket')) {
   try {
