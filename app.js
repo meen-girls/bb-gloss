@@ -10,8 +10,11 @@ var express = require('express')
   , nib = require('nib')
   , router = require('./router')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , mongoose = require('mongoose');
 
+// connect to db (hosted on mongo labs)
+mongoose.connect('mongodb://test:test@ds043467.mongolab.com:43467/bb-tit');
 
 function compile(str, path) {
   return stylus(str)
