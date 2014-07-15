@@ -1,3 +1,5 @@
+var async = require('async');
+var _ = require('lodash');
 var models = require(process.cwd() + '/models');
 
 module.exports = function(app) {
@@ -38,14 +40,35 @@ module.exports = function(app) {
       if (!document.locale || !document.project) {
         return res.send(400, 'missing data');
       }
-      // TODO: CREATE AN ASYNC WATERFALL THAT WILL CHECK FOR DEFAULT LOCALE AND POPULATE TRANSLATIONS
-      // create
-      models.Locale.create(document, function(error, document) {
-        if (error) {
-          return res.send(500, error);
+      // check for default translations for this locale
+      async.waterfall([
+        // get default translations for this locale
+        function(nextStep) {
+          models.Project.findOne({ name: 'default' }, function(error, project) {
+            models.Locale.findOne({project:project._id}, function(error, locale) {
+              return nextStep(null, locale);
+            });
+          });
+        },
+        // merge with any translations passed
+        function(locale, nextStep) {
+          var defaultTranslations = _.cloneDeep(locale.translations);
+          var translations = _.merge(defaultTranslations, translations);
+          return nextStep(null, translations);
         }
-        return res.send(201, document);
+      ], function(error, translations) {
+        if (translations) {
+          document.translations = translations;
+        }
+        // create locale
+        models.Locale.create(document, function(error, document) {
+          if (error) {
+            return res.send(500, error);
+          }
+          return res.send(201, document);
+        });
       });
+
     },
 
     update: function(req, res) {
