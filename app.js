@@ -64,8 +64,6 @@ if ('development' == app.get('env')) {
 //Add routes, in routes.js
 routes.registerRoutes(app);
 
-// app.use('/foo', router);
-
 // remove previous socket before continuing start-up
 if (app.get('socket')) {
   try {
