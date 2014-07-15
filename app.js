@@ -31,8 +31,6 @@ function compile(str, path) {
 
 var app = express();
 
-var index = require('./controllers/index')(app);
-
 // all environments
 var opts = require("nomnom")
    .option('sock', {
