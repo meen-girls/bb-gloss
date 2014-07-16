@@ -1,18 +1,18 @@
 // Routes
 
 Translator.Router.map(function() {
-  this.resource('client', {path: '/client/:id'}, function() {
-    this.route('projects', {path: '/projects'});
-  });
-  this.resource('project', {path: '/project/:id'}, function() {
-    this.route('locales', {path: '/locales'});
-    this.route('translation', {path: '/locales/:id'});
+  this.resource('clients', {path: '/'}, function() {
+    this.resource('client', {path: '/client/:cid'}, function() {
+      this.resource('project', {path: '/project'}, function() {
+        this.route('locales', {path: '/:pid'});
+      });
+    });
   });
 });
 
-// Index Route: '/'
+// Clients Route: '/'
 
-Translator.IndexRoute = Ember.Route.extend({
+Translator.ClientsRoute = Ember.Route.extend({
   model: function() {
     var clients = Ember.A();
     var store = this.get('store');
@@ -25,12 +25,11 @@ Translator.IndexRoute = Ember.Route.extend({
   }
 });
 
-
 // Client Route - Lists Projects
 
 Translator.ClientRoute = Ember.Route.extend({
   model: function(params) {
-    var url  = '/api/clients/' + params.id + '/projects';
+    var url  = '/api/clients/' + params.cid + '/projects';
     var projects = Ember.A();
     return Ember.$.getJSON(url).then(function(data) {
       data.forEach(function(project) {
@@ -41,31 +40,100 @@ Translator.ClientRoute = Ember.Route.extend({
   }
 });
 
-Translator.ClientProjectsRoute = Ember.Route.extend({
-  model: function(params) {
-    return this.modelFor('client');
-  }
-});
-
 // Projects Route - Lists Translations
-
-Translator.ProjectRoute = Ember.Route.extend({
-  model: function(params) {
-    var url  = '/api/projects/' + params.id + '/locales';
-    var locales = Ember.A();
-    return Ember.$.getJSON(url).then(function(data) {
-      data.forEach(function(locale) {
-        locales.pushObject(Translator.Locale.create(locale));
-      });
-      return locales;
-    });
-  }
-});
-
+Translator.ProjectRoute = Ember.Route.extend();
 Translator.ProjectLocalesRoute = Ember.Route.extend({
   model: function(params) {
-    return this.modelFor('project');
+    // Dummy Data
+    return [{
+      key:'home.footer',
+      translation: [{
+        _id: 'Unique Id',
+        name: 'en-US',
+        value: 'Home Footer'
+      }]
+     },
+     {
+      key:'home.header',
+      translation: [{
+        _id: 'Unique Id',
+        name: 'en-US',
+        value: 'Home Header'
+      }]
+     },
+     {
+      key:'links.site',
+      translation: [{
+        _id: 'Unique Id',
+        name: 'en-US',
+        value: 'Site'
+      }]
+     },
+     {
+      key:'links.about',
+      translation: [{
+        _id: 'Unique Id',
+        name: 'en-US',
+        value: 'About'
+      }]
+     },
+     {
+      key:'links.contact',
+      translation: [{
+        _id: 'Unique Id',
+        name: 'en-US',
+        value: 'Contact'
+      }]
+     },
+     {
+      key:'links.home',
+      translation: [{
+        _id: 'Unique Id',
+        name: 'en-US',
+        value: 'Home'
+      }]
+     },
+     {
+      key:'checkout.header',
+      translation: [{
+        _id: 'Unique Id',
+        name: 'en-US',
+        value: 'Checkout Header'
+      }]
+     },
+     {
+      key:'checkout.footer',
+      translation: [{
+        _id: 'Unique Id',
+        name: 'en-US',
+        value: 'Checkout Footer'
+      }]
+     },
+     {
+      key:'cart.header',
+      translation: [{
+        _id: 'Unique Id',
+        name: 'en-US',
+        value: 'Cart Header'
+      }]
+     },
+     {
+      key:'cart.footer',
+      translation: [{
+        _id: 'Unique Id',
+        name: 'en-US',
+        value: 'Cart Footer'
+      }]
+     }];
+
+    // Will return an API data in the f
+    // var url  = '/api/projects/' + params.pid + '/locales';
+    // var locales = Ember.A();
+    // return Ember.$.getJSON(url).then(function(data) {
+    //   data.forEach(function(locale) {
+    //     locales.pushObject(Translator.Locale.create(locale));
+    //   });
+    //   return locales;
+    // });
   }
 });
-
-// Translation Route
