@@ -1,3 +1,4 @@
+var _ = require('lodash');
 var models = require(process.cwd() + '/models');
 
 module.exports = function(app) {
@@ -81,7 +82,7 @@ module.exports = function(app) {
       // add project to conditions
       conditions.project = req.params.projectId;
       // get all locales for this project
-      models.Locale.find(conditions, 'locale', function(error, documents){
+      models.Locale.find(conditions, 'locale translations', function(error, documents){
         if (error) {
           return res.send(500, error);
         }
@@ -103,6 +104,29 @@ module.exports = function(app) {
           return res.send(500, error);
         }
         return res.send(document);
+      });
+    },
+
+    keys: function(req, res) {
+      var conditions = {};
+      // check for project id
+      if (!req.params.projectId) {
+        return res.send(400, 'no project id');
+      }
+      // add project to conditions
+      conditions.project = req.params.projectId;
+      // get all locales for this project
+      models.Locale.find(conditions, 'locale translations', function(error, documents){
+        if (error) {
+          return res.send(500, error);
+        }
+        var keys = [];
+        _.forEach(documents, function(locale) {
+          for (var prop in locale.translations) {
+            keys.push(prop);
+          }
+        });
+        return res.send(keys);
       });
     }
   };
