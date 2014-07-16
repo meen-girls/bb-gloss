@@ -74,28 +74,63 @@ module.exports = function(app) {
     update: function(req, res) {
       var document = req.body;
       var conditions = {
-        _id: req.params.projectId
+        _id: req.params.localeId
       };
-      // check for project id
+      // check for locale id
       if (!conditions._id) {
-        return res.send(400, 'no project id');
+        return res.send(400, 'no locale id');
       }
-      // update
-      models.Project.update(conditions, document, function(error) {
-        if (error) {
-          return res.send(500, error);
+      // check for translations for this locale
+      async.waterfall([
+        // get translations for this locale
+        function(nextStep) {
+          if (!document.translations) {
+            // we arent updating translations so just skip to next step
+            return nextStep(null, null);
+          }
+          models.Locale.findById(conditions._id, function(error, locale) {
+            return nextStep(null, locale);
+          });
+        },
+        // merge with any translations passed
+        function(locale, nextStep) {
+          if (!locale) {
+            // no locale was passed, continue to next step
+            return nextStep(null, null);
+          }
+          var currentTranslations = _.cloneDeep(locale.translations);
+          var translations = _.merge(currentTranslations, document.translations, function(currentValue, newValue) {
+            return _.isArray(currentValue) ? newValue : undefined;
+          });
+          // remove anything no longer needed
+          _.each(translations, function(v, k) {
+            if(!v) {
+              delete translations[k];
+            }
+          });
+          return nextStep(null, translations);
         }
-        return res.send(200);
+      ], function(error, translations) {
+        if (document.translations && translations) {
+          document.translations = translations;
+        }
+        // update
+        models.Locale.update(conditions, document, function(error) {
+          if (error) {
+            return res.send(500, error);
+          }
+          return res.send(200);
+        });
       });
     },
 
     remove: function(req, res) {
-      // check for project id
-      if (!req.params.projectId) {
-        return res.send(400, 'no project id');
+      // check for locale id
+      if (!req.params.localeId) {
+        return res.send(400, 'no locale id');
       }
       // remove
-      models.Project.findByIdAndRemove(req.params.projectId, function(error) {
+      models.Locale.findByIdAndRemove(req.params.localeId, function(error) {
         if (error) {
           return res.send(500, error);
         }
