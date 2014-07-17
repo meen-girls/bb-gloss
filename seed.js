@@ -13,7 +13,8 @@ var project = {
 };
 var locale = {
   locale: 'en-US',
-  translations: null
+  translations: null,
+  isDefault: true
 };
 
 fs.readFile(__dirname + '/data/en-US.json', 'utf8', function (err, data) {

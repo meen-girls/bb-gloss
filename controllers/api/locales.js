@@ -1,11 +1,84 @@
 var async = require('async');
 var _ = require('lodash');
 var models = require(process.cwd() + '/models');
+var nconf = require('nconf');
 
 module.exports = function(app) {
+
+  function getBBDefault(callback) {
+    console.info('Getting BB default locale');
+    var defaultProject = nconf.get('default_project');
+    // search for our default project
+    models.Project.findOne({
+      name: defaultProject.project
+    }, function(error, document) {
+      // make sure we got something back
+      if (document) {
+        // search the default BB project
+        models.Locale.findOne({
+          project: document._id,
+          isDefault: true
+        }, function(error, document) {
+          return callback(null, document);
+        });
+      } else {
+        // cant find any default translations
+        return callback(error, null);
+      }
+    });
+  }
+
+  function createTranslations(options, callback) {
+    console.info('Creating translations object (DUMMY FUNCTION FOR GOOGLE API TRANSLATOR)');
+    var translations = options.sourceTranslations;
+    return callback(null, translations);
+  }
+
+  function getTranslations(newDocument, callback) {
+    console.info('Getting translations for ' + projectId + ' (' + targetLocale + ')');
+    var projectId = newDocument.project;
+    var targetLocale = newDocument.locale;
+    async.waterfall([
+      // get base locale
+      function(nextStep) {
+        // check if this project has a default locale already
+        console.info('Getting project default locale');
+        models.Locale.findOne({
+          project: projectId,
+          isDefault: true
+        }, function(error, document) {
+          // if we didn't get anything back we need to search for BB default
+          if (!document) {
+            // set our new document as the default
+            newDocument.isDefault = true;
+            getBBDefault(nextStep);
+          } else {
+            return nextStep(null, document);
+          }
+        });
+      },
+      function(baseLocale, nextStep) {
+        console.info('Got base locale, now preparing to create translation object', baseLocale._id);
+        var options = {
+          sourceTranslations: baseLocale.translations,
+          sourceLocale: baseLocale.locale,
+          targetLocale: targetLocale
+        };
+        createTranslations(options, function(error, translations) {
+          return nextStep(error, translations);
+        });
+      }
+    ], function(error, translations) {
+      if (translations) {
+        newDocument.translations = translations;
+      }
+      return callback(error);
+    });
+  }
+
   return {
     index: function(req, res) {
-      models.Locale.find({}, 'locale project', function(error, documents) {
+      models.Locale.find({}, 'locale project isDefault', function(error, documents) {
         var options = {
           path: 'project',
           select: 'name'
@@ -22,7 +95,7 @@ module.exports = function(app) {
         return res.send(500, 'no locale id');
       }
       // get locale
-      models.Locale.findById(req.params.localeId, 'locale translations', function(error, document) {
+      models.Locale.findById(req.params.localeId, 'locale translations isDefault', function(error, document) {
         if (error) {
           return res.send(500, error);
         }
@@ -33,38 +106,21 @@ module.exports = function(app) {
     create: function(req, res) {
       var document = {
         project: req.body.project,
-        locale: req.body.locale,
-        translations: req.body.translations
+        locale: req.body.locale
       };
       // check for required fields
       if (!document.locale || !document.project) {
         return res.send(400, 'missing data');
       }
-      // check for default translations for this locale
-      async.waterfall([
-        // get default translations for this locale
-        function(nextStep) {
-          models.Project.findOne({ name: 'default' }, function(error, project) {
-            models.Locale.findOne({project:project._id}, function(error, locale) {
-              return nextStep(null, locale);
-            });
-          });
-        },
-        // merge with any translations passed
-        function(locale, nextStep) {
-          var defaultTranslations = _.cloneDeep(locale.translations);
-          var translations = _.merge(defaultTranslations, translations);
-          return nextStep(null, translations);
-        }
-      ], function(error, translations) {
-        if (translations) {
-          document.translations = translations;
-        }
+      console.info('Preparing to create locale: ' + document.locale);
+      getTranslations(document, function(error) {
+        console.info('Got translations: ', _.size(document.translations));
         // create locale
         models.Locale.create(document, function(error, document) {
           if (error) {
             return res.send(500, error);
           }
+          console.info('Created new locale');
           return res.send(201, document);
         });
       });
@@ -80,48 +136,6 @@ module.exports = function(app) {
       if (!conditions._id) {
         return res.send(400, 'no locale id');
       }
-      // check for translations for this locale
-      async.waterfall([
-        // get translations for this locale
-        function(nextStep) {
-          if (!document.translations) {
-            // we arent updating translations so just skip to next step
-            return nextStep(null, null);
-          }
-          models.Locale.findById(conditions._id, function(error, locale) {
-            return nextStep(null, locale);
-          });
-        },
-        // merge with any translations passed
-        function(locale, nextStep) {
-          if (!locale) {
-            // no locale was passed, continue to next step
-            return nextStep(null, null);
-          }
-          var currentTranslations = _.cloneDeep(locale.translations);
-          var translations = _.merge(currentTranslations, document.translations, function(currentValue, newValue) {
-            return _.isArray(currentValue) ? newValue : undefined;
-          });
-          // remove anything no longer needed
-          _.each(translations, function(v, k) {
-            if(!v) {
-              delete translations[k];
-            }
-          });
-          return nextStep(null, translations);
-        }
-      ], function(error, translations) {
-        if (document.translations && translations) {
-          document.translations = translations;
-        }
-        // update
-        models.Locale.update(conditions, document, function(error) {
-          if (error) {
-            return res.send(500, error);
-          }
-          return res.send(200);
-        });
-      });
     },
 
     remove: function(req, res) {

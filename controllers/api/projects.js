@@ -6,7 +6,7 @@ var helpers = require(process.cwd() + '/lib/helpers');
 function getProjectKeys(locales, callback) {
   var keys = [];
   _.forEach(locales, function(locale) {
-    iterateObject(locale.translations, function(key, path, value) {
+    helpers.iterateObject(locale.translations, function(key, path, value) {
       // use path, it is the whole path through the object tree
       keys.push(path);
     });

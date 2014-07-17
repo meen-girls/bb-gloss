@@ -4,6 +4,7 @@ var uglify   = require('gulp-uglify');
 var notify   = require('gulp-notify');
 var clean    = require('gulp-clean');
 var nodemon  = require('gulp-nodemon');
+var handlebars = require('gulp-ember-handlebars');
 
 var paths = {
   vendors: ['bower_components/jquery/dist/jquery.min.js', 'bower_components/handlebars/handlebars.min.js','./bower_components/ember/ember.js'],
@@ -28,6 +29,15 @@ gulp.task('clean', function() {
       .pipe(clean());
 });
 
+gulp.task('templates', function(){
+  gulp.src(['public/templates/*.handlebars'])
+    .pipe(handlebars({
+      outputType: 'browser'
+     }))
+    .pipe(concat('templates.js'))
+    .pipe(gulp.dest('public/js/dest'));
+});
+
 gulp.task('webserver', function() {
   nodemon({ script: 'app.js' })
   .on('restart', function() {
@@ -35,8 +45,13 @@ gulp.task('webserver', function() {
   });
 });
 
+gulp.task('watch', function() {
+  gulp.watch('public/templates/*.handlebars', ['templates']);
+});
+
+
 gulp.task('default', ['clean'], function(){
-  gulp.start('vendors','scripts', 'webserver');
+  gulp.start('vendors','scripts', 'templates', 'webserver', 'watch');
 });
 
 gulp.task('upload', ['clean'], function(){

@@ -14,8 +14,18 @@ var express      = require('express')
   , morgan       = require('morgan')
   , errorhandler = require('errorhandler')
   , bodyParser   = require('body-parser')
+  , nconf        = require('nconf')
   , mongoose     = require('mongoose');
 
+//
+// Setup nconf to use (in-order):
+//   1. Command-line arguments
+//   2. Environment variables
+//   3. A file located at 'path/to/config.json'
+//
+nconf.argv()
+    .env()
+    .file({ file: './config.json' });
 
 // connect to db (hosted on mongo labs)
 mongoose.connect('mongodb://test:test@ds043467.mongolab.com:43467/bb-tit');

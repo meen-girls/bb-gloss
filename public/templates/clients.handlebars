@@ -1,0 +1,8 @@
+<div class="col-md-2">
+  <div class="btn-group-vertical">
+  {{#each client in model}}
+    {{#link-to 'client' client._id class='btn btn-primary'}}{{client.name}}{{/link-to}}
+  {{/each}}
+  </div>
+</div>
+{{outlet}}
