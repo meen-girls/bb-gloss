@@ -3,7 +3,14 @@
   <ul class="list-unstyled">
     {{#each translatedKeys}}
       <li>
-        <a class="btn btn-primary">{{name}}</a>
+        <a href="#">{{name}}</a>
+        <ul class="list-unstyled">
+          {{#each item in keys}}
+          <li>
+            {{item.key}}
+          </li>
+          {{/each}}
+        </ul>
       </li>
     {{/each}}
   </ul>      
