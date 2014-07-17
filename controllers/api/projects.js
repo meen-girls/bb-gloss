@@ -81,7 +81,7 @@ module.exports = function(app) {
       // add project to conditions
       conditions.project = req.params.projectId;
       // get all locales for this project
-      models.Locale.find(conditions, 'locale', function(error, documents){
+      models.Locale.find(conditions, 'locale translations', function(error, documents){
         if (error) {
           return res.send(500, error);
         }
