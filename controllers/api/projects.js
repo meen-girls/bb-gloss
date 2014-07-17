@@ -1,7 +1,46 @@
+var pathval = require('pathval');
 var _ = require('lodash');
 var models = require(process.cwd() + '/models');
+var helpers = require(process.cwd() + '/lib/helpers');
+
+function getProjectKeys(locales, callback) {
+  var keys = [];
+  _.forEach(locales, function(locale) {
+    helpers.iterateObject(locale.translations, function(key, path, value) {
+      // use path, it is the whole path through the object tree
+      keys.push(path);
+    });
+  });
+  // rid dupes and any null values
+  keys = _.chain(keys).uniq().compact().value();
+  callback(null, keys);
+}
+
+function getTranslationsForKey(key, locales) {
+  var translations = _.map(locales, function(locale) {
+    return {
+      _id: locale._id,
+      name: locale.locale,
+      value: pathval.get(locale.translations, key)
+    };
+  });
+  return translations;
+}
+
+function getKeyBasedTranslations(locales, callback) {
+  getProjectKeys(locales, function(error, keys) {
+    var results = _.map(keys, function(key) {
+      return {
+        key: key,
+        translations: getTranslationsForKey(key, locales)
+      };
+    });
+    return callback(error, results);
+  });
+}
 
 module.exports = function(app) {
+
   return {
     index: function(req, res) {
       models.Project.find({}, 'name', function(error, documents) {
@@ -116,17 +155,13 @@ module.exports = function(app) {
       // add project to conditions
       conditions.project = req.params.projectId;
       // get all locales for this project
-      models.Locale.find(conditions, 'locale translations', function(error, documents){
+      models.Locale.find(conditions, 'locale translations', function(error, locales){
         if (error) {
           return res.send(500, error);
         }
-        var keys = [];
-        _.forEach(documents, function(locale) {
-          for (var prop in locale.translations) {
-            keys.push(prop);
-          }
+        getKeyBasedTranslations(locales, function(error, results) {
+          return res.send(results);
         });
-        return res.send(keys);
       });
     }
   };
