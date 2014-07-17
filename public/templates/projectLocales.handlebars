@@ -1,0 +1,15 @@
+<div class="col-md-8">
+  <ul class="list-unstyled">
+  {{#each key in model}}
+    <li>
+      <a class="btn btn-primary">{{key.key}}</a>
+      <ul>
+        {{#each l in key.translation}}
+          <li>{{l.name}}</li>
+          <li>{{l.value}}</li>
+        {{/each}}
+      </ul>
+    </li>
+  {{/each}}
+  </ul>
+</div>
