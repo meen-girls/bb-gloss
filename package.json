@@ -22,6 +22,7 @@
     "gulp-nodemon": "1.0.4",
     "gulp-notify": "1.3.1",
     "gulp-uglify": "0.3.0",
+    "gulp-ember-handlebars": "~0.6.0",
     "lodash": "2.2.1",
     "nconf": "^0.6.5",
     "nib": "1.0.0",

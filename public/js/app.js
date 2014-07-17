@@ -1,4 +1,6 @@
-var Translator = Ember.Application.create();
+var Translator = Ember.Application.create({
+  rootElement: $('#app')
+});
 
 
 // See models.js for the store.

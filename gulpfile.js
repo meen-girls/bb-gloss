@@ -4,6 +4,7 @@ var uglify   = require('gulp-uglify');
 var notify   = require('gulp-notify');
 var clean    = require('gulp-clean');
 var nodemon  = require('gulp-nodemon');
+var handlebars = require('gulp-ember-handlebars');
 
 var paths = {
   vendors: ['bower_components/jquery/dist/jquery.min.js', 'bower_components/handlebars/handlebars.min.js','./bower_components/ember/ember.js'],
@@ -35,8 +36,17 @@ gulp.task('webserver', function() {
   });
 });
 
+gulp.task('templates', function(){
+  gulp.src(['public/templates/*.handlebars'])
+    .pipe(handlebars({
+      outputType: 'browser'
+     }))
+    .pipe(concat('templates.js'))
+    .pipe(gulp.dest('public/js/dest'));
+});
+
 gulp.task('default', ['clean'], function(){
-  gulp.start('vendors','scripts', 'webserver');
+  gulp.start('vendors','scripts', 'templates', 'webserver');
 });
 
 gulp.task('upload', ['clean'], function(){
