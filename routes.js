@@ -35,7 +35,8 @@ exports.registerRoutes = function(app) {
     .get(api.projects.locales);
 
   app.route('/api/projects/:projectId/keys')
-    .get(api.projects.keys);
+    .get(api.projects.keys.index)
+    .put(api.projects.keys.update);
 
   app.route('/api/projects/:projectId/locales/:locale')
     .get(api.projects.locale);
