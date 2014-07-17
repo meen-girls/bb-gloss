@@ -29,13 +29,6 @@ gulp.task('clean', function() {
       .pipe(clean());
 });
 
-gulp.task('webserver', function() {
-  nodemon({ script: 'app.js' })
-  .on('restart', function() {
-    console.log('restart');
-  });
-});
-
 gulp.task('templates', function(){
   gulp.src(['public/templates/*.handlebars'])
     .pipe(handlebars({
@@ -45,8 +38,20 @@ gulp.task('templates', function(){
     .pipe(gulp.dest('public/js/dest'));
 });
 
+gulp.task('webserver', function() {
+  nodemon({ script: 'app.js' })
+  .on('restart', function() {
+    console.log('restart');
+  });
+});
+
+gulp.task('watch', function() {
+  gulp.watch('public/templates/*.handlebars', ['templates']);
+});
+
+
 gulp.task('default', ['clean'], function(){
-  gulp.start('vendors','scripts', 'templates', 'webserver');
+  gulp.start('vendors','scripts', 'templates', 'webserver', 'watch');
 });
 
 gulp.task('upload', ['clean'], function(){
