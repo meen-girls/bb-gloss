@@ -2,7 +2,6 @@ var async = require('async');
 var _ = require('lodash');
 var models = require(process.cwd() + '/models');
 var nconf = require('nconf');
-var helpers = require(process.cwd() + '/lib/helpers');
 
 module.exports = function(app) {
 
@@ -30,13 +29,6 @@ module.exports = function(app) {
   }
 
   function createTranslations(options, callback) {
-      helpers.iterateObject(options.sourceTranslations, function(key, path, value){
-        var translatedWord = http.get('https://www.googleapis.com/language/translate/v2?key=AIzaSyDhQc7qhrA6L8RjxgYZzvwPvb8OPaqgubA&source='+ langFrom +'&target=' + langTo +'&q=' + value, function(res){
-          return data.translations.translatedText;
-        })
-
-        options.sourceTranslations[path] = translatedWord;
-      });
     console.info('Creating translations object (DUMMY FUNCTION FOR GOOGLE API TRANSLATOR)');
     var translations = options.sourceTranslations;
     return callback(null, translations);
