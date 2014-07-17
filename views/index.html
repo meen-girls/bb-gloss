@@ -48,25 +48,21 @@
   </script>
   <script type="text/x-handlebars" data-template-name="project/locales">
     <div class="col-md-8">
+
       <ul class="list-unstyled">
-      {{#each key in model}}
-        <li>
-          <a class="btn btn-primary">{{key.key}}</a>
-          <ul>
-            {{#each l in key.translation}}
-              <li>{{l.name}}</li>
-              <li>{{l.value}}</li>
-            {{/each}}
-          </ul>
-        </li>
-      {{/each}}
-      </ul>
+        {{#each translatedKeys}}
+          <li>
+            <a class="btn btn-primary">{{name}}</a>
+          </li>
+        {{/each}}
+      </ul>      
     </div>
   </script>
 
   <script src="/js/dest/vendors.min.js"></script>
   <script src="/js/app.js"></script>
   <script src="/js/routes.js"></script>
+  <script src="/js/controllers.js"></script>
   <script src="/js/models.js"></script>
 </body>
 </html>
