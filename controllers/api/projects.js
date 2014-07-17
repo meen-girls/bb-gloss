@@ -146,23 +146,57 @@ module.exports = function(app) {
       });
     },
 
-    keys: function(req, res) {
-      var conditions = {};
-      // check for project id
-      if (!req.params.projectId) {
-        return res.send(400, 'no project id');
-      }
-      // add project to conditions
-      conditions.project = req.params.projectId;
-      // get all locales for this project
-      models.Locale.find(conditions, 'locale translations', function(error, locales){
-        if (error) {
-          return res.send(500, error);
+    keys: {
+      index: function(req, res) {
+        var conditions = {};
+        // check for project id
+        if (!req.params.projectId) {
+          return res.send(400, 'no project id');
         }
-        getKeyBasedTranslations(locales, function(error, results) {
-          return res.send(results);
+        // add project to conditions
+        conditions.project = req.params.projectId;
+        // get all locales for this project
+        models.Locale.find(conditions, 'locale translations', function(error, locales){
+          if (error) {
+            return res.send(500, error);
+          }
+          getKeyBasedTranslations(locales, function(error, results) {
+            return res.send(results);
+          });
         });
-      });
+      },
+
+      update: function(req, res) {
+        var conditions = {
+          project: req.params.projectId,
+          _id: req.body._id
+        };
+        var body = {
+          key: req.body.key,
+          value: req.body.value
+        };
+        // check for project id
+        if (!body.key || !req.params.projectId) {
+          return res.send(400, 'missing data');
+        }
+        // we need to get the translations object for this locale
+        models.Locale.findOne(conditions, 'locale translations', function(error, locale) {
+          if (!locale || error) {
+            return res.send(500, 'unable to find locale for this project');
+          }
+          if (!pathval.get(locale.translations, body.key, body.value)) {
+            return res.send(500, 'key does not exist for this locale');
+          }
+          pathval.set(locale.translations, body.key, body.value);
+          locale.markModified('translations');
+          locale.save(function(error, locale) {
+            if (error) {
+              return res.send(500, error);
+            }
+            return res.send(200);
+          });
+        });
+      }
     }
   };
 };
