@@ -187,7 +187,7 @@ module.exports = function(app) {
           if (!pathval.get(locale.translations, body.key, body.value)) {
             return res.send(500, 'key does not exist for this locale');
           }
-          pathval.set(locale.translations, req.body.key, req.body.value);
+          pathval.set(locale.translations, body.key, body.value);
           locale.markModified('translations');
           locale.save(function(error, locale) {
             if (error) {
