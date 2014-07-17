@@ -167,12 +167,35 @@ module.exports = function(app) {
       },
 
       update: function(req, res) {
-        var conditions = {};
+        var conditions = {
+          project: req.params.projectId,
+          _id: req.body._id
+        };
+        var body = {
+          key: req.body.key,
+          value: req.body.value
+        };
         // check for project id
-        if (!req.params.projectId) {
-          return res.send(400, 'no project id');
+        if (!body.key || !req.params.projectId) {
+          return res.send(400, 'missing data');
         }
-        return res.send(404);
+        // we need to get the translations object for this locale
+        models.Locale.findOne(conditions, 'locale translations', function(error, locale) {
+          if (!locale || error) {
+            return res.send(500, 'unable to find locale for this project');
+          }
+          if (!pathval.get(locale.translations, body.key, body.value)) {
+            return res.send(500, 'key does not exist for this locale');
+          }
+          pathval.set(locale.translations, req.body.key, req.body.value);
+          locale.markModified('translations');
+          locale.save(function(error, locale) {
+            if (error) {
+              return res.send(500, error);
+            }
+            return res.send(200);
+          });
+        });
       }
     }
   };
