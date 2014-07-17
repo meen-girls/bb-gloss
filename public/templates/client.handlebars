@@ -1,0 +1,8 @@
+<div class="col-md-2">
+  <div class="btn-group-vertical">
+  {{#each project in model}}
+    {{#link-to 'project.locales' project._id class='btn btn-primary'}}{{project.name}}{{/link-to}}
+  {{/each}}
+  </div>
+</div>
+{{outlet}}

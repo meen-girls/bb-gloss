@@ -43,6 +43,9 @@ Translator.ClientRoute = Ember.Route.extend({
 // Projects Route - Lists Translations
 Translator.ProjectRoute = Ember.Route.extend();
 Translator.ProjectLocalesRoute = Ember.Route.extend({
+  renderTemplate: function() {
+    this.render('projectLocales');
+  },
   model: function(params) {
     // Dummy Data
     return [{
