@@ -1,3 +1,4 @@
 /node_modules
 /bower_components
 /public/js/dest
+npm-debug.log
