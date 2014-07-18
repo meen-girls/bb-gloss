@@ -38,7 +38,7 @@ Translator.Project = Ember.Object.extend({
   _id: null
 });
 
-Translator.Locale = Ember.Object.extend({
+Translator.Key = Ember.Object.extend({
   name: null,
   _id: null
 });

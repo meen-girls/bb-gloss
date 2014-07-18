@@ -4,7 +4,7 @@ Translator.Router.map(function() {
   this.resource('clients', {path: '/'}, function() {
     this.resource('client', {path: '/client/:cid'}, function() {
       this.resource('project', {path: '/project'}, function() {
-        this.route('locales', {path: '/:pid'});
+        this.route('keys', {path: '/:pid'});
       });
     });
   });
@@ -42,101 +42,20 @@ Translator.ClientRoute = Ember.Route.extend({
 
 // Projects Route - Lists Translations
 Translator.ProjectRoute = Ember.Route.extend();
-Translator.ProjectLocalesRoute = Ember.Route.extend({
+Translator.ProjectKeysRoute = Ember.Route.extend({
   renderTemplate: function() {
-    this.render('projectLocales');
+    console.log('sadf');
+    this.render('projectKeys');
   },
   model: function(params) {
-    // Dummy Data
-    return [{
-      key:'home.footer',
-      translation: [{
-        _id: 'Unique Id',
-        name: 'en-US',
-        value: 'Home Footer'
-      }]
-     },
-     {
-      key:'home.header',
-      translation: [{
-        _id: 'Unique Id',
-        name: 'en-US',
-        value: 'Home Header'
-      }]
-     },
-     {
-      key:'links.site',
-      translation: [{
-        _id: 'Unique Id',
-        name: 'en-US',
-        value: 'Site'
-      }]
-     },
-     {
-      key:'links.about',
-      translation: [{
-        _id: 'Unique Id',
-        name: 'en-US',
-        value: 'About'
-      }]
-     },
-     {
-      key:'links.contact',
-      translation: [{
-        _id: 'Unique Id',
-        name: 'en-US',
-        value: 'Contact'
-      }]
-     },
-     {
-      key:'links.home',
-      translation: [{
-        _id: 'Unique Id',
-        name: 'en-US',
-        value: 'Home'
-      }]
-     },
-     {
-      key:'checkout.header',
-      translation: [{
-        _id: 'Unique Id',
-        name: 'en-US',
-        value: 'Checkout Header'
-      }]
-     },
-     {
-      key:'checkout.footer',
-      translation: [{
-        _id: 'Unique Id',
-        name: 'en-US',
-        value: 'Checkout Footer'
-      }]
-     },
-     {
-      key:'cart.header',
-      translation: [{
-        _id: 'Unique Id',
-        name: 'en-US',
-        value: 'Cart Header'
-      }]
-     },
-     {
-      key:'cart.footer',
-      translation: [{
-        _id: 'Unique Id',
-        name: 'en-US',
-        value: 'Cart Footer'
-      }]
-     }];
-
-    // Will return an API data in the f
-    // var url  = '/api/projects/' + params.pid + '/locales';
-    // var locales = Ember.A();
-    // return Ember.$.getJSON(url).then(function(data) {
-    //   data.forEach(function(locale) {
-    //     locales.pushObject(Translator.Locale.create(locale));
-    //   });
-    //   return locales;
-    // });
+    var url  = '/api/projects/' + params.pid + '/keys';
+    var keys = Ember.A();
+    return Ember.$.getJSON(url).then(function(data) {
+      console.log(data);
+      data.forEach(function(key) {
+        keys.pushObject(Translator.Locale.create(key));
+      });
+      return keys;
+    });
   }
 });

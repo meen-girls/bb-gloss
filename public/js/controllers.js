@@ -1,5 +1,6 @@
-Translator.ProjectLocalesController = Ember.ArrayController.extend({
+Translator.ProjectKeysController = Ember.ArrayController.extend({
   translatedKeys: function() {
+    console.log('MmmM Right there');
     var ar = this.get('content');
     var tranName = '';
     var newArray = [];
