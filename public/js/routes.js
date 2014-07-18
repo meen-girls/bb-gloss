@@ -4,7 +4,9 @@ Translator.Router.map(function() {
   this.resource('clients', {path: '/'}, function() {
     this.resource('client', {path: '/client/:cid'}, function() {
       this.resource('project', {path: '/project'}, function() {
-        this.route('keys', {path: '/:pid'});
+        this.resource('keys', {path: '/:pid'}, function () {
+          this.route('key', {path: '/key/:kid'});
+        });
       });
     });
   });
@@ -42,20 +44,28 @@ Translator.ClientRoute = Ember.Route.extend({
 
 // Projects Route - Lists Translations
 Translator.ProjectRoute = Ember.Route.extend();
-Translator.ProjectKeysRoute = Ember.Route.extend({
+Translator.KeysRoute = Ember.Route.extend({
   renderTemplate: function() {
-    console.log('sadf');
-    this.render('projectKeys');
+    this.render('keys');
   },
   model: function(params) {
     var url  = '/api/projects/' + params.pid + '/keys';
-    var keys = Ember.A();
+    var keys = Translator.Keys.create();
     return Ember.$.getJSON(url).then(function(data) {
-      console.log(data);
       data.forEach(function(key) {
-        keys.pushObject(Translator.Locale.create(key));
+        keys.createRecord(key);
       });
       return keys;
     });
+  }
+});
+
+Translator.KeysKeyRoute = Ember.Route.extend({
+  renderTemplate: function() {
+    this.render('keysKey');
+  },
+  model: function(params) {
+    var model = this.modelFor('keys').lookup(params.kid);
+    return model;
   }
 });

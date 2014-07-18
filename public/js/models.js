@@ -43,6 +43,28 @@ Translator.Key = Ember.Object.extend({
   _id: null
 });
 
+Translator.Keys = Ember.Object.extend({
+  translations: [],
+  _id: null
+});
+
+Translator.Keys.reopen({
+  createRecord: function(data) {
+    var model = Translator.Key.create();
+    model.setProperties(data);
+    this.get('translations').pushObject(model);
+  },
+  lookup: function(id) {
+    var model = null;
+     this.get('translations').forEach(function(item){
+       if (item.get('key') === id) {
+         model = item;
+       }
+     });
+     return model;
+  }
+});
+
 Translator.Translation = Ember.Object.extend({
   translations: {},
   locale: null
