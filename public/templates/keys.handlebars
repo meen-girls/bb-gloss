@@ -1,6 +1,6 @@
-<div class="col-md-3">
+<div class="col-md-4 languages">
   <h3>Existing Languages</h3>
-  <ul>
+  <ul class="existing-languages  list-unstyled">
   {{#each existingLanguages}}
     <li>{{this}}</li>
   {{/each}}
@@ -22,7 +22,7 @@
     {{#each keys}}
       <li>
         <h4>{{name}}</h4>
-        <ul class="list-unstyled">
+        <ul class="list-unstyled list-keys">
           {{#each item in keys}}
           <li>
             {{#link-to 'keys.key' item.key}}{{item.key}}{{/link-to}}

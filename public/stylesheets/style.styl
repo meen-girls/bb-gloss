@@ -1,10 +1,100 @@
 @import "nib";
 @import "bootstrap";
+@import "_variables";
 
+h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  border-bottom: .1rem solid #ddd;
+  padding-bottom: .5rem;
+}
+
+strong {
+  font-weight: 700;
+}
+
+.navbar {
+  border-radius: none;
+  margin-bottom: 1rem;
+}
+
+.btn-group-vertical {
+  width: 100%;
+}
+.btn {
+  display: inline-block;
+  min-width: 50%;
+  &.btn-primary {
+    margin-top: 1rem;
+    border-radius: 0;
+  }
+}
+
+form {
+  margin-bottom: 1rem;
+}
+
+.existing-languages {
+  border: .1rem solid #ddd;
+  li {
+    border-bottom: .1rem solid #ddd;
+    padding: 1rem;
+    font-weight: 700;
+    color: tomato;
+    &:last-of-type {
+      border: none;
+    }
+  }
+}
+
+.languages {
+  h4 {
+    border: .1rem solid #ddd;
+    padding: 1rem;
+    margin: 0;
+    text-transform: capitalize;
+    background: #eee;
+    &:hover {
+      background: #ddd;
+    }
+  }
+  li > ul {
+    margin-top: 0;
+    border: .1rem solid #eee;
+    border-top: none;
+    li {
+      padding: 0;
+      border-bottom: .1rem solid #eee;
+      &:last-of-type {
+        border: none;
+      }
+      a {
+        display: block;
+        padding: 1rem;
+        &:hover {
+          background: #ddd;
+        }
+      }
+    }
+  }
+}
 .translations {
   label {
     display: inline-block;
     width: 10rem;
     margin-right: .5rem;
   }
+}
+
+.updated {
+  opacity: 0;
+  transition: all .3s;
+  color: limegreen;
+  &.active {
+    opacity: 1;
+  }
+}
+
+.list-keys {
+  display: none;
 }

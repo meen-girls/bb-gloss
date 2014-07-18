@@ -20,7 +20,7 @@ Translator.KeysController = Ember.ObjectController.extend({
 
         tranName = newName;
         obj = {keys: []};
-        obj.name = tranName;
+        obj.name = tranName.replace(/_/g, ' ');
       }
 
       obj.keys.push(ar[i]);
@@ -75,6 +75,7 @@ Translator.KeysKeyController = Ember.ObjectController.extend({
   needs: ['application'],
   pid: Ember.computed.alias('controllers.application.pid'),
   kid: null,
+  isUpdated: false,
   actions: {
     submitAction: function(params) {
       var controller = this;
@@ -94,7 +95,10 @@ Translator.KeysKeyController = Ember.ObjectController.extend({
         });
       })
       .then(function() {
-        console.log('finished');
+        controller.set('isUpdated', true);
+        Ember.run.later(function() {
+          controller.set('isUpdated', false);
+        }, 2000);
       });
     }
   }

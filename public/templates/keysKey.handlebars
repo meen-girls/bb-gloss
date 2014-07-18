@@ -1,6 +1,7 @@
-<div class="col-md-5 translations">
+<div class="col-md-4 translations">
   <form>
     <h3>{{key}}</h3>
+    <p {{bind-attr class='isUpdated:active :updated'}}><strong>Updated!</strong></p>
     {{#each translations}}
       <div class="form-group">
         <label>{{name}}</label>
