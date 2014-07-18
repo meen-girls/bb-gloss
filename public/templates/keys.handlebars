@@ -1,5 +1,21 @@
-<div class="col-md-2">
-
+<div class="col-md-3">
+  <h3>Existing Languages</h3>
+  {{model._id}}
+  <ul>
+  {{#each existingLanguages}}
+    <li>{{this}}</li>
+  {{/each}}
+  </ul>
+  <form>
+    <h3>Add a new language</h3>
+    {{view Ember.Select
+      prompt = '-'
+      class='form-control'
+      selectionBinding='selectedLanguage'
+      content=availableLanguages
+    }}
+    <button {{action 'add'}} class="btn btn-primary">Add Language</button>
+  </form>
   <ul class="list-unstyled">
     {{#each keys}}
       <li>
@@ -13,6 +29,6 @@
         </ul>
       </li>
     {{/each}}
-  </ul>      
+  </ul>
 </div>
 {{outlet}}
