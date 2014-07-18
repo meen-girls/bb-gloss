@@ -51,12 +51,18 @@ Translator.KeysRoute = Ember.Route.extend({
   model: function(params) {
     var url  = '/api/projects/' + params.pid + '/keys';
     var keys = Translator.Keys.create();
+    keys.set('_id', params.pid);
     return Ember.$.getJSON(url).then(function(data) {
+      console.log(data);
       data.forEach(function(key) {
         keys.createRecord(key);
       });
       return keys;
     });
+  },
+  setupController: function(controller, model) {
+    this._super(controller, model);
+    this.controllerFor('application').set('pid', model.get('_id'));
   }
 });
 

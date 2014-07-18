@@ -33,8 +33,7 @@
     "morgan": "~1.1.1",
     "errorhandler": "~1.1.1",
     "body-parser": "~1.4.3",
-    "pathval": "^0.1.1",
-    "gulp-watch": "~0.6.8",
-    "iterator": "git+https://github.com/meen-girls/iterator"
+    "iterator": "git+https://github.com/meen-girls/iterator",
+    "pathval": "^0.1.1"
   }
 }

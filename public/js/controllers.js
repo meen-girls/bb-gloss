@@ -1,3 +1,7 @@
+Translator.ApplicationController = Ember.Controller.extend({
+  pid: null
+});
+
 Translator.KeysController = Ember.ObjectController.extend({
   keys: function() {
     var ar = this.get('content.translations');
@@ -26,7 +30,36 @@ Translator.KeysController = Ember.ObjectController.extend({
       }
     }
 
-    return newArray;
-  }.property('content.translations')
+    return newArray.compact();
+  }.property('content.translations'),
+  selectedLanguage: 'en-US',
+  selectedLanguageDidChange: function() {
+    console.log(this.get('selectedLanguage'));
+  }.observes('selectedLanguage'),
+  availableLanguages: function() {
+    var controller = this;
+    return Translator.Languages.filter(function(item) {
+      return Ember.$.inArray(item, controller.get('existingLanguages')) === -1;
+    });
+  }.property(Translator.Languages),
+  existingLanguages: function() {
+    var firstKey = this.get('content.translations')[0];
+    return firstKey.get('translations').map(function(item) {
+      return item.name;
+    });
+  }.property('content.translations'),
+  actions: {
+    createNewLanguage: function() {
 
+    }
+  }
+
+});
+
+Translator.KeysKeyController = Ember.ObjectController.extend({
+  needs: ['application'],
+  pid: Ember.computed.alias('controllers.application.pid'),
+  init: function() {
+    console.log(this.get('pid'));
+  }
 });
