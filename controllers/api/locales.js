@@ -40,14 +40,13 @@ module.exports = function(app) {
     var pathsToTranslate = helpers.deepMap(translations, function(key, path, value){
       if (limit > 20) return false;
       limit++;
-      if (_.contains(keysToIgnore, key) || _.isBoolean(value)) {
-        return false;
+      if (!_.contains(keysToIgnore, key) && !_.isBoolean(value)) {
+        return {
+          key: key,
+          path: path,
+          value: value
+        };
       }
-      return {
-        key: key,
-        path: path,
-        value: value
-      };
     });
     async.each(pathsToTranslate, function(item, nextPath) {
       request({
