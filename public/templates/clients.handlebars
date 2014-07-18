@@ -1,7 +1,8 @@
 <div class="col-md-2">
+  <h3>Select Client</h3>
   <div class="btn-group-vertical">
   {{#each client in model}}
-    {{#link-to 'client' client._id class='btn btn-primary'}}{{client.name}}{{/link-to}}
+    {{#link-to 'client' client._id class='btn btn-default'}}{{client.name}}{{/link-to}}
   {{/each}}
   </div>
 </div>
