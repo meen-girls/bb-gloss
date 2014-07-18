@@ -39,8 +39,8 @@ Translator.Project = Ember.Object.extend({
 });
 
 Translator.Key = Ember.Object.extend({
-  name: null,
-  _id: null
+  key: null,
+  translations: []
 });
 
 Translator.Keys = Ember.Object.extend({

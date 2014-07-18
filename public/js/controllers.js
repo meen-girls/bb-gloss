@@ -59,7 +59,24 @@ Translator.KeysController = Ember.ObjectController.extend({
 Translator.KeysKeyController = Ember.ObjectController.extend({
   needs: ['application'],
   pid: Ember.computed.alias('controllers.application.pid'),
-  init: function() {
-    console.log(this.get('pid'));
+  kid: null,
+
+  actions: {
+    submitAction: function(params) {
+      var obj = {
+        '_id': params._id,
+        'key': this.get('kid'),
+        'value': params.value
+      };
+      $.ajax({
+          type : "PUT",
+          url : "/api/projects/" + this.get('pid') + '/keys',
+          data : obj,
+          dataType : "json",
+          success : function(data) {
+              alert("yes");
+          }
+      });
+    }  
   }
 });

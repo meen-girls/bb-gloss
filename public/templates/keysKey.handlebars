@@ -1,6 +1,11 @@
-<div class="col-md-2">
-  {{model._id}}
-  {{#each translations}}
-    {{name}} - {{value}} <br />
-  {{/each}}
+<div class="col-md-5 translations">
+  <form>
+    <h3>{{key}}</h3>
+    {{#each translations}}
+      <div class="form-group">
+        <label>{{name}}</label> {{input type="text" value=value}}
+        <button {{action submitAction this target="controller"}}>Submit</button>
+      </div>
+    {{/each}}
+  </form>
 </div>
