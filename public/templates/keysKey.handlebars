@@ -3,8 +3,9 @@
     <h3>{{key}}</h3>
     {{#each translations}}
       <div class="form-group">
-        <label>{{name}}</label> {{input type="text" value=value}}
-        <button {{action submitAction this target="controller"}}>Submit</button>
+        <label>{{name}}</label>
+        {{input type="text" class="form-control" value=value}}
+        <button class="btn btn-primary" {{action submitAction this }}>Submit</button>
       </div>
     {{/each}}
   </form>

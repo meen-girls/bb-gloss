@@ -73,6 +73,7 @@ Translator.Translation = Ember.Object.extend({
 Translator.Languages = [
   'en-US',
   'es-ES',
+  'fr-FR',
   'de-DE',
   'ru-ES'
 ];

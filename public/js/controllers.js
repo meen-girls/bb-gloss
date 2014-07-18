@@ -32,16 +32,13 @@ Translator.KeysController = Ember.ObjectController.extend({
 
     return newArray.compact();
   }.property('content.translations'),
-  selectedLanguage: 'en-US',
-  selectedLanguageDidChange: function() {
-    console.log(this.get('selectedLanguage'));
-  }.observes('selectedLanguage'),
+  selectedLanguage: null,
   availableLanguages: function() {
     var controller = this;
     return Translator.Languages.filter(function(item) {
       return Ember.$.inArray(item, controller.get('existingLanguages')) === -1;
     });
-  }.property(Translator.Languages),
+  }.property('existingLanguages'),
   existingLanguages: function() {
     var firstKey = this.get('content.translations')[0];
     return firstKey.get('translations').map(function(item) {
@@ -50,7 +47,25 @@ Translator.KeysController = Ember.ObjectController.extend({
   }.property('content.translations'),
   actions: {
     createNewLanguage: function() {
-
+      if (!this.get('selectedLanguage')) return;
+      var controller = this;
+      var obj = {
+        'project': this.get('pid'),
+        'locale': this.get('selectedLanguage')
+      };
+      return new Ember.RSVP.Promise(function(resolve, reject) {
+        Ember.$.ajax({
+            type : "POST",
+            url : "/api/locales/",
+            data : obj
+        })
+        .done(function(data) {
+          resolve(data);
+        });
+      })
+      .then(function() {
+        window.location.reload();
+      });
     }
   }
 
@@ -60,23 +75,27 @@ Translator.KeysKeyController = Ember.ObjectController.extend({
   needs: ['application'],
   pid: Ember.computed.alias('controllers.application.pid'),
   kid: null,
-
   actions: {
     submitAction: function(params) {
+      var controller = this;
       var obj = {
         '_id': params._id,
         'key': this.get('kid'),
         'value': params.value
       };
-      $.ajax({
-          type : "PUT",
-          url : "/api/projects/" + this.get('pid') + '/keys',
-          data : obj,
-          dataType : "json",
-          success : function(data) {
-              alert("yes");
-          }
+      return new Ember.RSVP.Promise(function(resolve, reject) {
+        Ember.$.ajax({
+            type : "PUT",
+            url : "/api/projects/" + controller.get('pid') + '/keys',
+            data : obj
+        })
+        .done(function(data) {
+          resolve(data);
+        });
+      })
+      .then(function() {
+        console.log('finished');
       });
-    }  
+    }
   }
 });

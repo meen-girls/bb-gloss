@@ -1,11 +1,11 @@
 <div class="col-md-3">
   <h3>Existing Languages</h3>
-  {{model._id}}
   <ul>
   {{#each existingLanguages}}
     <li>{{this}}</li>
   {{/each}}
   </ul>
+  {{#if view.showLanguages}}
   <form>
     <h3>Add a new language</h3>
     {{view Ember.Select
@@ -14,8 +14,10 @@
       selectionBinding='selectedLanguage'
       content=availableLanguages
     }}
-    <button {{action 'add'}} class="btn btn-primary">Add Language</button>
+    <button {{action 'createNewLanguage'}} class="btn btn-primary">Add Language</button>
   </form>
+  {{/if}}
+
   <ul class="list-unstyled">
     {{#each keys}}
       <li>

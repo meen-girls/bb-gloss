@@ -11,6 +11,7 @@
     "controller",
     "class",
     "href",
-    "site_title"
+    "site_title",
+    "copyright"
   ]
 }

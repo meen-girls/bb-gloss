@@ -61,6 +61,7 @@ Translator.KeysRoute = Ember.Route.extend({
   },
   setupController: function(controller, model) {
     this._super(controller, model);
+    controller.set('pid', model.get('_id'));
     this.controllerFor('application').set('pid', model.get('_id'));
   }
 });
@@ -75,6 +76,6 @@ Translator.KeysKeyRoute = Ember.Route.extend({
   },
   setupController: function(controller, model) {
     this._super(controller, model);
-    this.controllerFor('keysKey').set('kid', model.get('key'));
+    controller.set('kid', model.get('key'));
   }
 });

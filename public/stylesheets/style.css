@@ -1262,5 +1262,3 @@ th.visible-print,td.visible-print{display:table-cell !important}
 tr.hidden-print{display:none !important}
 th.hidden-print,td.hidden-print{display:none !important}
 }.translations label{display:inline-block;width:10rem;margin-right:.5rem}
-.translations input{width:30rem;background:none;border:none;}
-.translations input:focus{border:2px inset #ebe9ed;background:#fff}
