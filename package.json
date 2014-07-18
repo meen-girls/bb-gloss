@@ -13,7 +13,7 @@
   "dependencies": {
     "bootstrap3-stylus": "0.1.0",
     "nomnom": "1.8.0",
-    "bower": "1.3.4",
+    "bower": "1.3.8",
     "ejs": "1.0.0",
     "express": "4.6.1",
     "gulp": "3.6.2",
@@ -33,7 +33,8 @@
     "morgan": "~1.1.1",
     "errorhandler": "~1.1.1",
     "body-parser": "~1.4.3",
-    "iterator": "git+https://github.com/meen-girls/iterator",
-    "pathval": "^0.1.1"
+    "pathval": "^0.1.1",
+    "iterator": "git+https://github.com/meen-girls/iterator#0.2.0",
+    "request": "^2.37.0"
   }
 }
