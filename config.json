@@ -2,5 +2,15 @@
   "default_project": {
     "client": "BB",
     "project": "default"
-  }
+  },
+  "google_api": {
+    "url": "https://www.googleapis.com/language/translate/v2",
+    "key": "AIzaSyDhQc7qhrA6L8RjxgYZzvwPvb8OPaqgubA"
+  },
+  "ignore_keys": [
+    "controller",
+    "class",
+    "href",
+    "site_title"
+  ]
 }

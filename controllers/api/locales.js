@@ -3,6 +3,8 @@ var _ = require('lodash');
 var models = require(process.cwd() + '/models');
 var nconf = require('nconf');
 var helpers = require(process.cwd() + '/lib/helpers');
+var request = require('request');
+var pathval = require('pathval');
 
 module.exports = function(app) {
 
@@ -30,16 +32,44 @@ module.exports = function(app) {
   }
 
   function createTranslations(options, callback) {
-      helpers.iterateObject(options.sourceTranslations, function(key, path, value){
-        var translatedWord = http.get('https://www.googleapis.com/language/translate/v2?key=AIzaSyDhQc7qhrA6L8RjxgYZzvwPvb8OPaqgubA&source='+ langFrom +'&target=' + langTo +'&q=' + value, function(res){
-          return data.translations.translatedText;
-        })
-
-        options.sourceTranslations[path] = translatedWord;
-      });
-    console.info('Creating translations object (DUMMY FUNCTION FOR GOOGLE API TRANSLATOR)');
     var translations = options.sourceTranslations;
-    return callback(null, translations);
+    var sourceLang = options.sourceLang;
+    var targetLang = options.targetLang;
+    var keysToIgnore = nconf.get('ignore_keys');
+    var limit = 0;
+    var pathsToTranslate = helpers.deepMap(translations, function(key, path, value){
+      if (limit > 20) return false;
+      limit++;
+      if (_.contains(keysToIgnore, key) || _.isBoolean(value)) {
+        return false;
+      }
+      return {
+        key: key,
+        path: path,
+        value: value
+      };
+    });
+    async.each(pathsToTranslate, function(item, nextPath) {
+      request({
+        url: nconf.get('google_api').url,
+        qs: {
+          key: nconf.get('google_api').key,
+          source: sourceLang,
+          target: targetLang,
+          q: item.value
+        },
+        json: true
+      }, function(error, response, body) {
+        if (body && body.data && body.data.translations) {
+          var translation = body.data.translations[0].translatedText;
+          pathval.set(translations, item.path, translation);
+        }
+        return nextPath(null);
+      });
+    }, function(error) {
+      console.info('Creating translations object');
+      return callback(null, translations);
+    });
   }
 
   function getTranslations(newDocument, callback) {
@@ -69,9 +99,12 @@ module.exports = function(app) {
         console.info('Got base locale, now preparing to create translation object', baseLocale._id);
         var options = {
           sourceTranslations: baseLocale.translations,
-          sourceLocale: baseLocale.locale,
-          targetLocale: targetLocale
+          sourceLang: baseLocale.locale.split('-')[0],
+          targetLang: targetLocale.split('-')[0]
         };
+        if (options.sourceLang && options.targetLang && (options.sourceLang === options.targetLang)) {
+          return nextStep(error, baseLocale.translations);
+        }
         createTranslations(options, function(error, translations) {
           return nextStep(error, translations);
         });
