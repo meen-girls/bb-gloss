@@ -1,13 +1,13 @@
-<div class="col-md-8">
+<div class="col-md-2">
 
   <ul class="list-unstyled">
-    {{#each translatedKeys}}
+    {{#each keys}}
       <li>
-        <a href="#">{{name}}</a>
+        <h4>{{name}}</h4>
         <ul class="list-unstyled">
           {{#each item in keys}}
           <li>
-            {{item.key}}
+            {{#link-to 'keys.key' item.key}}{{item.key}}{{/link-to}}
           </li>
           {{/each}}
         </ul>
@@ -15,3 +15,4 @@
     {{/each}}
   </ul>      
 </div>
+{{outlet}}

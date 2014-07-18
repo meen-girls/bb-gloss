@@ -1,6 +1,6 @@
-Translator.ProjectLocalesController = Ember.ArrayController.extend({
-  translatedKeys: function() {
-    var ar = this.get('content');
+Translator.KeysController = Ember.ObjectController.extend({
+  keys: function() {
+    var ar = this.get('content.translations');
     var tranName = '';
     var newArray = [];
     var obj = {};
@@ -27,7 +27,6 @@ Translator.ProjectLocalesController = Ember.ArrayController.extend({
     }
 
     return newArray;
-  }.property('content')
+  }.property('content.translations')
 
 });
-
