@@ -1,0 +1,18 @@
+<div class="col-md-2">
+
+  <ul class="list-unstyled">
+    {{#each keys}}
+      <li>
+        <h4>{{name}}</h4>
+        <ul class="list-unstyled">
+          {{#each item in keys}}
+          <li>
+            {{#link-to 'keys.key' item.key}}{{item.key}}{{/link-to}}
+          </li>
+          {{/each}}
+        </ul>
+      </li>
+    {{/each}}
+  </ul>      
+</div>
+{{outlet}}
