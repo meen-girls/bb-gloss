@@ -30,3 +30,12 @@ Translator.KeysController = Ember.ObjectController.extend({
   }.property('content.translations')
 
 });
+
+Translator.KeysKeyController = Ember.ObjectController.extend({
+
+  actions: {
+    submitAction: function(param) {
+
+    }  
+  }
+});
