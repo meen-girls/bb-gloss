@@ -38,7 +38,7 @@ module.exports = function(app) {
     var keysToIgnore = nconf.get('ignore_keys');
     var limit = 0;
     var pathsToTranslate = helpers.deepMap(translations, function(key, path, value){
-      if (limit > 20) return false;
+      // if (limit > 20) return false;
       limit++;
       if (!_.contains(keysToIgnore, key) && !_.isBoolean(value)) {
         return {
