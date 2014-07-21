@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "postinstall": "./node_modules/.bin/bower install",
-    "start": "./node_modules/.bin/gulp server"
+    "start": "./node_modules/.bin/gulp gulp"
   },
   "engines": {
     "node": "0.10.x",
