@@ -1,5 +1,6 @@
 Translator.ApplicationController = Ember.Controller.extend({
-  pid: null
+  pid: null,
+  cid: null
 });
 
 Translator.KeysController = Ember.ObjectController.extend({
@@ -69,6 +70,59 @@ Translator.KeysController = Ember.ObjectController.extend({
     }
   }
 
+});
+
+Translator.ClientsController = Ember.ObjectController.extend({
+  actions: {
+    createNewClient: function() {
+      if (!this.get('newClientName')) return;
+      var controller = this;
+      var obj = {
+        name: this.get('newClientName')
+      };
+      return new Ember.RSVP.Promise(function(resolve, reject) {
+        Ember.$.ajax({
+          type : "POST",
+          url : "/api/clients/",
+          data : obj
+        })
+        .done(function(data) {
+          resolve(data);
+        });
+      })
+      .then(function() {
+        window.location.reload();
+      });
+    }
+  }
+});
+
+Translator.ClientController = Ember.ObjectController.extend({
+  needs: ['application'],
+  cid: Ember.computed.alias('controllers.application.cid'),
+  actions: {
+    createNewProject: function() {
+      if (!this.get('newProjectName')) return;
+      var controller = this;
+      var obj = {
+        client: controller.get('cid'),
+        name: this.get('newProjectName')
+      };
+      return new Ember.RSVP.Promise(function(resolve, reject) {
+        Ember.$.ajax({
+          type : "POST",
+          url : "/api/projects",
+          data : obj
+        })
+        .done(function(data) {
+          resolve(data);
+        });
+      })
+      .then(function() {
+        window.location.reload();
+      });
+    }
+  }
 });
 
 Translator.KeysKeyController = Ember.ObjectController.extend({

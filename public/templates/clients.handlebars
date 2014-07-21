@@ -1,9 +1,14 @@
-<div class="col-md-2">
+<div class="col-md-2 clients">
   <h3>Select Client</h3>
   <div class="btn-group-vertical">
   {{#each client in model}}
     {{#link-to 'client' client._id class='btn btn-default'}}{{client.name}}{{/link-to}}
   {{/each}}
   </div>
+  <form>
+    {{input type="text" class="" valueBinding='newClientName'}}
+    <button {{action 'createNewClient'}} class="btn btn-primary">Add Client</button>
+  </form>
 </div>
+
 {{outlet}}

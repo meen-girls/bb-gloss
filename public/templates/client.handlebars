@@ -1,9 +1,13 @@
-<div class="col-md-2">
+<div class="col-md-2 projects">
   <h3>Select Project</h3>
   <div class="btn-group-vertical">
   {{#each project in model}}
     {{#link-to 'keys' project._id class='btn btn-default'}}{{project.name}}{{/link-to}}
   {{/each}}
   </div>
+  <form>
+    {{input type="text" class="" valueBinding='newProjectName'}}
+    <button {{action 'createNewProject'}} class="btn btn-primary">Add Project</button>
+  </form>
 </div>
 {{outlet}}
