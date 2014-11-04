@@ -50,4 +50,7 @@ exports.registerRoutes = function(app) {
     .get(api.locales.show)
     .put(api.locales.update)
     .delete(api.locales.remove);
+
+  app.route('/api/translate/:source/:destination')
+    .post(api.translate);
 };
