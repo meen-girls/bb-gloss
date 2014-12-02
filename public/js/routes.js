@@ -33,12 +33,18 @@ Translator.ClientRoute = Ember.Route.extend({
   model: function(params) {
     var url  = '/api/clients/' + params.cid + '/projects';
     var projects = Ember.A();
+    projects.set('_id', params.cid);
     return Ember.$.getJSON(url).then(function(data) {
       data.forEach(function(project) {
         projects.pushObject(Translator.Project.create(project));
       });
       return projects;
     });
+  },
+  setupController: function(controller, model) {
+    this._super(controller, model);
+    controller.set('cid', model.get('_id'));
+    this.controllerFor('application').set('cid', model.get('_id'));
   }
 });
 

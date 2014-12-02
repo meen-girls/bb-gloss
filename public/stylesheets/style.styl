@@ -23,7 +23,6 @@ strong {
 }
 .btn {
   display: inline-block;
-  min-width: 50%;
   &.btn-primary {
     margin-top: 1rem;
     border-radius: 0;
@@ -31,7 +30,7 @@ strong {
 }
 
 form {
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 }
 
 .existing-languages {
@@ -77,6 +76,9 @@ form {
       }
     }
   }
+  .btn {
+    min-width: 50%
+  }
 }
 .translations {
   label {
@@ -97,4 +99,10 @@ form {
 
 .list-keys {
   display: none;
+}
+
+.clients, .projects {
+  input, .btn {
+    width: 100%;
+  }
 }
